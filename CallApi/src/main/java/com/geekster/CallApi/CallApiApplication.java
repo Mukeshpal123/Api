@@ -9,7 +9,7 @@ public class CallApiApplication {
 	public static void main(String[] args) {
 		try {
 			// Set the URL of the API endpoint
-			URL url = new URL("https://api.zippopotam.us/us/33162");
+			URL url = new URL("https://api.nationalize.io/?name=nathaniel");
 
 			// Open a connection to the API endpoint
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
