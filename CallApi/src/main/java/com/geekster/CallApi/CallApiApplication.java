@@ -1,40 +1,36 @@
 package com.geekster.CallApi;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
-@SpringBootApplication
 public class CallApiApplication {
+	public static void main(String[] args) {
+		try {
+			// Set the URL of the API endpoint
+			URL url = new URL("https://api.zippopotam.us/us/33162");
 
-	public static void main(String[] args) throws IOException, IOException {
-		// Create URL object for the API endpoint
-		URL url = new URL("https://api.chucknorris.io/jokes/random");
+			// Open a connection to the API endpoint
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
 
-		// Open HTTP connection
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
+			// Read the response from the API
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String line;
+			StringBuilder responseBuilder = new StringBuilder();
+			while ((line = reader.readLine()) != null) {
+				responseBuilder.append(line);
+			}
+			reader.close();
 
-		// Get response code
-		int responseCode = conn.getResponseCode();
-		System.out.println("Response code: " + responseCode);
+			// Convert the response to JSON format
+			String json = responseBuilder.toString();
 
-		// Read response body
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		String inputLine;
-		StringBuilder responseBody = new StringBuilder();
-		while ((inputLine = in.readLine()) != null) {
-			responseBody.append(inputLine);
+			// Print the JSON data
+			System.out.println(json);
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
 		}
-		in.close();
-
-		// Print response body
-		System.out.println("Response body: " + responseBody.toString());
 	}
-
 }
